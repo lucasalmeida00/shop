@@ -23,10 +23,10 @@ class MyApp extends StatelessWidget {
           hintColor: Colors.deepOrange,
           fontFamily: 'Lato',
         ),
-        home: ProductsOverviewPage(),
+        home: const ProductsOverviewPage(),
         debugShowCheckedModeBanner: false,
         routes: {
-          AppRoutes.PRODUCTS_LIST: (ctx) => ProductsOverviewPage(),
+          AppRoutes.PRODUCTS_LIST: (ctx) => const ProductsOverviewPage(),
           AppRoutes.PRODUCT_DETAIL: (ctx) => const ProductDetailPage(),
         },
       ),
