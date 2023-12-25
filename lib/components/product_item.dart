@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/models/cart.dart';
+import 'package:shop/models/cart_item.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/utils/routes.dart';
 
@@ -8,8 +10,39 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<Product>(context);
-    final Product product = provider;
+    final product = Provider.of<Product>(context);
+    final cart = Provider.of<Cart>(context);
+
+    handleAddToCart(Product product) {
+      final isProductInCart = cart.isProductInCart(product.id);
+      final cartItem = CartItem(
+        id: DateTime.now().toString(),
+        productId: product.id,
+        name: product.title,
+        quantity: 1,
+        price: product.price,
+      );
+
+      isProductInCart ? cart.removeItem(product.id) : cart.addItem(cartItem);
+
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(!isProductInCart
+              ? 'Produto adicionado com sucesso!'
+              : 'Produto removido com sucesso!'),
+          duration: const Duration(seconds: 2),
+          action: SnackBarAction(
+            label: 'DESFAZER',
+            onPressed: () {
+              isProductInCart
+                  ? cart.addItem(cartItem)
+                  : cart.removeItem(product.id);
+            },
+          ),
+        ),
+      );
+    }
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -29,8 +62,10 @@ class ProductItem extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.shopping_cart),
+            onPressed: () => handleAddToCart(product),
+            icon: Icon(cart.isProductInCart(product.id)
+                ? Icons.shopping_cart
+                : Icons.shopping_cart_outlined),
             color: Theme.of(context).hintColor,
           ),
         ),

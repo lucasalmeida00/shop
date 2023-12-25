@@ -1,7 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop/components/product_grid.dart';
+import 'package:shop/models/cart.dart';
 
 enum FilterOptions {
   Favorites,
@@ -20,6 +22,8 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('MyShop'),
@@ -48,6 +52,17 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               }
             },
           ),
+          Badge(
+            label: Text(cart.itemsCount.toString()),
+            textStyle: const TextStyle(
+              fontSize: 12,
+            ),
+            backgroundColor: Theme.of(context).hintColor,
+            child: IconButton(
+              onPressed: () => {},
+              icon: const Icon(Icons.shopping_cart),
+            ),
+          )
         ],
       ),
       body: ProductGrid(
