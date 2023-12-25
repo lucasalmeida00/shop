@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/product_grid.dart';
 import 'package:shop/models/cart.dart';
+import 'package:shop/utils/routes.dart';
 
 enum FilterOptions {
   Favorites,
@@ -57,9 +58,12 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
             textStyle: const TextStyle(
               fontSize: 12,
             ),
+            offset: const Offset(-3, 3),
             backgroundColor: Theme.of(context).hintColor,
             child: IconButton(
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.of(context).pushNamed(AppRoutes.CART),
+              },
               icon: const Icon(Icons.shopping_cart),
             ),
           )
