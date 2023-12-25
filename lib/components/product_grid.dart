@@ -12,7 +12,10 @@ class ProductGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProductList>(context);
     final List<Product> loadedProducts = provider.items;
-    List<Product> filteredProducts = loadedProducts;
+
+    List<Product> filteredProducts = showFavoriteOnly
+        ? loadedProducts.where((product) => product.isFavorite).toList()
+        : loadedProducts;
 
     return GridView.builder(
       padding: const EdgeInsets.all(10),
