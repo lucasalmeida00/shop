@@ -30,7 +30,7 @@ class _OrderWidgetState extends State<OrderWidget> {
             subtitle:
                 Text(DateFormat('dd/MM/yyyy hh:mm').format(widget.order.date)),
             trailing: IconButton(
-              icon: const Icon(Icons.expand_more),
+              icon: Icon(!_expanded ? Icons.expand_more : Icons.expand_less),
               onPressed: () {
                 handleToggleExpanded();
               },
@@ -38,16 +38,17 @@ class _OrderWidgetState extends State<OrderWidget> {
           ),
           if (_expanded)
             Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 4,
-                ),
-                height: 400,
-                child: ListView(
-                  children: widget.order.products.map((product) {
-                    return ProductOrderItem(cartItem: product);
-                  }).toList(),
-                ))
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 4,
+              ),
+              height: 400,
+              child: ListView(
+                children: widget.order.products.map((product) {
+                  return ProductOrderItem(cartItem: product);
+                }).toList(),
+              ),
+            )
         ],
       ),
     );
