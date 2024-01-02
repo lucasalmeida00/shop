@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/components/product_order_item.dart';
 import 'package:shop/models/cart.dart';
 import 'package:shop/models/cart_item.dart';
 
@@ -30,16 +31,8 @@ class CartItemWidget extends StatelessWidget {
       ),
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-        child: ListTile(
-          leading: CircleAvatar(
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: FittedBox(child: Text('R\$ ${cartItem.price}')),
-            ),
-          ),
-          title: Text(cartItem.name),
-          subtitle: Text('R\$ ${cartItem.price * cartItem.quantity}'),
-          trailing: Text('${cartItem.quantity}x'),
+        child: ProductOrderItem(
+          cartItem: cartItem,
         ),
       ),
     );

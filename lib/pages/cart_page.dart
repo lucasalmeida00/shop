@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/cart_grid.dart';
 import 'package:shop/models/cart.dart';
+import 'package:shop/models/order_list.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<Cart>(context);
+    final cart = Provider.of<Cart>(
+      context,
+    );
+    final order = Provider.of<OrderList>(context, listen: false);
     final totalAmount = cart.totalAmount;
 
     return Scaffold(
@@ -35,7 +39,10 @@ class CartPage extends StatelessWidget {
                   ),
                   const Spacer(),
                   TextButton(
-                    onPressed: () => {},
+                    onPressed: () => {
+                      order.addOrder(cart),
+                      cart.clear(),
+                    },
                     child: const Text('COMPRAR'),
                   )
                 ],
